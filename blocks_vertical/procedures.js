@@ -740,13 +740,13 @@ Blockly.ScratchBlocks.ProcedureUtils.setCustomColor = function(color) {
   this.customColor_ = color;
   if (color && color !== '#FF6680') {
     // Override the default "more" colors with custom color
-    const c = goog.color;
-    const rgb = c.hexToRgb(color);
+    var c = goog.color;
+    var rgb = c.hexToRgb(color);
 
     this.setColour(color,
-      c.rgbArrayToHex(c.darken(rgb, 0.1)),
-      c.rgbArrayToHex(c.darken(rgb, 0.2)),
-      c.rgbArrayToHex(c.darken(rgb, 0.3))
+        c.rgbArrayToHex(c.darken(rgb, 0.1)),
+        c.rgbArrayToHex(c.darken(rgb, 0.2)),
+        c.rgbArrayToHex(c.darken(rgb, 0.3))
     );
   } else {
     // Revert to default "more" colors
@@ -761,21 +761,21 @@ Blockly.ScratchBlocks.ProcedureUtils.setCustomColor = function(color) {
     
     for (var i = 0; i < allBlocks.length; i++) {
       var block = allBlocks[i];
-      if ((block.type === 'procedures_call' || 
-           block.type === 'procedures_prototype' || 
+      if ((block.type === 'procedures_call' ||
+           block.type === 'procedures_prototype' ||
            block.type === 'procedures_definition') &&
           block.procCode_ === currentProcCode &&
           block !== this) {
         block.customColor_ = color;
         if (color && color !== '#FF6680') {
 
-          const c = goog.color;
-          const rgb = c.hexToRgb(color);
+          var c = goog.color;
+          var rgb = c.hexToRgb(color);
 
           block.setColour(color,
-            c.rgbArrayToHex(c.darken(rgb, 0.1)),
-            c.rgbArrayToHex(c.darken(rgb, 0.2)),
-            c.rgbArrayToHex(c.darken(rgb, 0.3))
+              c.rgbArrayToHex(c.darken(rgb, 0.1)),
+              c.rgbArrayToHex(c.darken(rgb, 0.2)),
+              c.rgbArrayToHex(c.darken(rgb, 0.3))
           );
         } else {
           var moreColors = Blockly.Colours.more;

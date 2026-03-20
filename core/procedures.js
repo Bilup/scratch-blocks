@@ -47,10 +47,10 @@ Blockly.Procedures.NAME_TYPE = Blockly.PROCEDURE_CATEGORY_NAME;
 
 /**
  * Set of open procedure folders.
- * @type {!Set.<string>}
+ * @type {!Object.<string, boolean>}
  * @private
  */
-Blockly.Procedures.openFolders_ = new Set();
+Blockly.Procedures.openFolders_ = {};
 
 /**
  * Check if a folder is currently open.
@@ -58,7 +58,7 @@ Blockly.Procedures.openFolders_ = new Set();
  * @return {boolean} True if the folder is open.
  */
 Blockly.Procedures.isFolderOpen = function(folderName) {
-  return Blockly.Procedures.openFolders_.has(folderName);
+  return Blockly.Procedures.openFolders_.hasOwnProperty(folderName);
 };
 
 /**
@@ -68,9 +68,9 @@ Blockly.Procedures.isFolderOpen = function(folderName) {
  */
 Blockly.Procedures.setFolderOpen = function(folderName, isOpen) {
   if (isOpen) {
-    Blockly.Procedures.openFolders_.add(folderName);
+    Blockly.Procedures.openFolders_[folderName] = true;
   } else {
-    Blockly.Procedures.openFolders_.delete(folderName);
+    delete Blockly.Procedures.openFolders_[folderName];
   }
   // Refresh the flyout to show the updated state
   var workspace = Blockly.getMainWorkspace();

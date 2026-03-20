@@ -619,6 +619,7 @@ Blockly.BlockSvg.prototype.getHeightWidth = function() {
     height += block.height - Blockly.BlockSvg.NOTCH_HEIGHT;
     width = Math.max(width, block.width);
     block = block.getNextBlock();
+
   }
   
   return {height: height, width: width};

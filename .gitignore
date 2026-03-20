@@ -24,11 +24,9 @@ python_compressed.js
 .vscode
 
 /accessible/*
-/dist
+# /dist Need to let scratch-vm CI pass
 /msg/js/*
 !/msg/js/en.js
-/msg/json/*
-!/msg/json/en.json
 /gh-pages/main.js
 /gh-pages/playgrounds
 /gh-pages/Gemfile.lock
