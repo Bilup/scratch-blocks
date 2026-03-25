@@ -1,20 +1,110 @@
-name: Build
+name: CI
 
 on:
   push:
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run test:lint
+      - run: npm run build
+      # Save built files as artifact
+      - name: Upload built files
+        uses: actions/upload-artifact@v4
+        with:
+          name: built-files
+          path:
+            - dist
+            - blockly_uncompressed_vertical.js
+            - blockly_uncompressed_horizontal.js
+            - blockly_compressed_vertical.js
+            - blockly_compressed_horizontal.js
+            - blocks_compressed.js
+            - blocks_compressed_horizontal.js
+            - blocks_compressed_vertical.js
+            - msg/js/*.js
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    if: >
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/develop'
+
+    steps:
+    - name: Checkout repo (with push access)
+      uses: actions/checkout@v4
       with:
-        persist-credentials: false
-    - name: Install Node.js
-      uses: actions/setup-node@v4
+        fetch-depth: 0
+        persist-credentials: true
+
+    - name: Download dist
+      uses: actions/download-artifact@v4
       with:
-        node-version: 22
-        cache: npm
-    - run: npm ci
-    - run: npm run test:lint
+        name: built-files
+        path: .
+
+    - name: Deploy to develop-builds
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+        # Backup built files
+        rm -rf /tmp/build
+        mkdir -p /tmp/build
+        cp -r dist /tmp/build/
+        cp -r blockly_uncompressed_* /tmp/build/ 2>/dev/null || true
+        cp -r blockly_compressed_* /tmp/build/ 2>/dev/null || true
+        cp -r blocks_compressed* /tmp/build/ 2>/dev/null || true
+        cp -r msg/js /tmp/build/msg/ 2>/dev/null || true
+
+        # Fetch all branches
+        git fetch origin
+
+        # Checkout or create develop-builds based on develop
+        if git show-ref --verify --quiet refs/remotes/origin/develop-builds; then
+          git checkout develop-builds
+          git pull origin develop-builds
+        else
+          git checkout -b develop-builds origin/develop
+        fi
+
+        # Sync code with develop
+        git merge origin/develop --no-edit
+
+        # Replace built files
+        rm -rf dist
+        mkdir dist
+        cp -r /tmp/build/dist/* dist/
+        cp -r /tmp/build/blockly_uncompressed_* . 2>/dev/null || true
+        cp -r /tmp/build/blockly_compressed_* . 2>/dev/null || true
+        cp -r /tmp/build/blocks_compressed* . 2>/dev/null || true
+        cp -r /tmp/build/msg/js msg/ 2>/dev/null || true
+
+        # Force add all built files (ignore .gitignore)
+        git add -f dist
+        git add -f blockly_uncompressed_*.js
+        git add -f blockly_compressed_*.js
+        git add -f blocks_compressed*.js
+        git add -f msg/js/*.js
+
+        # Commit if changed
+        git commit -m "chore: update dist from develop" || echo "No changes"
+
+        # Push
+        git push origin develop-builds
