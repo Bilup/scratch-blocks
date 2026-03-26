@@ -20,8 +20,8 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npm run test:lint
-      - run: npm run build
+      - run: npm run test
+      - run: npm run prepublish
       # Save built files as artifact
       - name: Upload built files
         uses: actions/upload-artifact@v4
