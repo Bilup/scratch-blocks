@@ -75,6 +75,10 @@ jobs:
         mkdir -p /tmp/build/msg/js
         cp -r msg/js/* /tmp/build/msg/js/ 2>/dev/null || true
 
+        # Clean working directory to avoid checkout conflicts
+        git reset --hard HEAD
+        git clean -fd
+
         # Fetch all branches
         git fetch origin
 
