@@ -304,21 +304,21 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '<block type="control_switch" id="control_switch">' +
       '<value name="VALUE">' +
         '<shadow type="text">' +
-          '<field name="TEXT">value</field>' +
+          '<field name="TEXT"></field>' +
         '</shadow>' +
       '</value>' +
     '</block>' +
     '<block type="control_case" id="control_case">' +
       '<value name="VALUE">' +
         '<shadow type="text">' +
-          '<field name="TEXT">case</field>' +
+          '<field name="TEXT"></field>' +
         '</shadow>' +
       '</value>' +
     '</block>' +
     '<block type="control_case_fallthrough" id="control_case_fallthrough">' +
       '<value name="VALUE">' +
         '<shadow type="text">' +
-          '<field name="TEXT">case</field>' +
+          '<field name="TEXT"></field>' +
         '</shadow>' +
       '</value>' +
     '</block>' +
