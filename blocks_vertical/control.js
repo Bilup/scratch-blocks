@@ -567,7 +567,7 @@ Blockly.Blocks['control_case'] = {
     this.jsonInit({
       "message0": Blockly.Msg.CONTROL_CASE,
       "message1": "%1", // Statement
-      "message2": "break", // Break indicator
+      "message2": Blockly.Msg.CONTROL_BREAK,
       "args0": [
         {
           "type": "input_value",

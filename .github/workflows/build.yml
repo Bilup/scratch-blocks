@@ -75,6 +75,10 @@ jobs:
         mkdir -p /tmp/build/msg/js
         cp -r msg/js/* /tmp/build/msg/js/ 2>/dev/null || true
 
+        # Clean working directory to avoid checkout conflicts
+        git reset --hard HEAD
+        git clean -fd
+
         # Fetch all branches
         git fetch origin
 
@@ -86,8 +90,8 @@ jobs:
           git checkout -b develop-builds origin/develop
         fi
 
-        # Sync code with develop
-        git merge origin/develop --no-edit
+        # Sync code with develop - automatically resolve conflicts in favor of develop
+        git merge -X theirs origin/develop --no-edit
 
         # Replace built files
         rm -rf dist
