@@ -1,65 +1,3 @@
-name: CI
-
-on:
-  push:
-  pull_request:
-
-permissions:
-  contents: write
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-      - run: npm ci
-      - run: npm run test:lint
-      - run: npm run translate
-      - run: npm run prepublish
-      # Save built files as artifact
-      - name: Upload built files
-        uses: actions/upload-artifact@v4
-        with:
-          name: built-files
-          path: |
-            dist
-            blockly_uncompressed_vertical.js
-            blockly_uncompressed_horizontal.js
-            blockly_compressed_vertical.js
-            blockly_compressed_horizontal.js
-            blocks_compressed.js
-            blocks_compressed_horizontal.js
-            blocks_compressed_vertical.js
-            msg/js/*.js
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    if: >
-      github.event_name == 'push' &&
-      github.ref == 'refs/heads/develop'
-
-    steps:
-    - name: Checkout repo (with push access)
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        persist-credentials: true
-
-    - name: Download dist
-      uses: actions/download-artifact@v4
-      with:
-        name: built-files
-        path: .
-
     - name: Deploy to develop-builds
       run: |
         git config --global user.name "github-actions[bot]"
@@ -90,8 +28,8 @@ jobs:
           git checkout -b develop-builds origin/develop
         fi
 
-        # Sync code with develop
-        git merge origin/develop --no-edit
+        # Sync code with develop - automatically resolve conflicts in favor of develop
+        git merge -X theirs origin/develop --no-edit
 
         # Replace built files
         rm -rf dist
