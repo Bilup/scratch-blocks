@@ -69,6 +69,40 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
         '</shadow>' +
       '</value>' +
     '</block>' +
+    '<block type="motion_pointtowards_xy" id="motion_pointtowards_xy">' +
+      '<value name="X">' +
+        '<shadow id="pointx" type="math_number">' +
+          '<field name="NUM">0</field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="Y">' +
+        '<shadow id="pointy" type="math_number">' +
+          '<field name="NUM">0</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="motion_pointtowards_xyfrom" id="motion_pointtowards_xyfrom">' +
+      '<value name="X">' +
+        '<shadow id="pointx" type="math_number">' +
+          '<field name="NUM">0</field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="Y">' +
+        '<shadow id="pointy" type="math_number">' +
+          '<field name="NUM">0</field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="FROMX">' +
+        '<shadow id="pointx" type="math_number">' +
+          '<field name="NUM">0</field>' +
+        '</shadow>' +
+      '</value>' +
+      '<value name="FROMY">' +
+        '<shadow id="pointy" type="math_number">' +
+          '<field name="NUM">0</field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
     '<block type="motion_gotoxy" id="motion_gotoxy">' +
       '<value name="X">' +
         '<shadow id="movex" type="math_number">' +
@@ -324,6 +358,7 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '</block>' +
     '<block type="control_default" id="control_default"></block>' +
     '<block type="control_break" id="control_break"></block>' +
+    '<block type="control_continue" id="control_continue"></block>' +
     '<block type="control_stop" id="control_stop"></block>' +
     '<block type="control_start_as_clone" id="control_start_as_clone"></block>' +
     '<block type="control_create_clone_of" id="control_create_clone_of">' +
