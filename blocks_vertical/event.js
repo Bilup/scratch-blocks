@@ -32,7 +32,7 @@ Blockly.Blocks['event_whentouchingobject'] = {
    * Block for when a sprite is touching an object.
    * @this Blockly.Block
    */
-  init: function() {
+  init: function () {
     this.jsonInit({
       "message0": Blockly.Msg.EVENT_WHENTOUCHINGOBJECT,
       "args0": [
@@ -52,7 +52,7 @@ Blockly.Blocks['event_touchingobjectmenu'] = {
    * "Touching [Object]" Block Menu.
    * @this Blockly.Block
    */
-  init: function() {
+  init: function () {
     this.jsonInit({
       "message0": "%1",
       "args0": [
@@ -75,17 +75,41 @@ Blockly.Blocks['event_whenflagclicked'] = {
    * Block for when flag clicked.
    * @this Blockly.Block
    */
-  init: function() {
+  init: function () {
     this.jsonInit({
       "id": "event_whenflagclicked",
       "message0": Blockly.Msg.EVENT_WHENFLAGCLICKED,
       "args0": [
         {
           "type": "field_image",
-          "src": Blockly.mainWorkspace.options.pathToMedia + "green-flag.svg",
+          "src": Blockly.mainWorkspace.options.pathToMedia + "blue-flag.svg",
           "width": 24,
           "height": 24,
           "alt": "flag"
+        }
+      ],
+      "category": Blockly.Categories.event,
+      "extensions": ["colours_event", "shape_hat"]
+    });
+  }
+};
+
+Blockly.Blocks['event_whenstopclicked'] = {
+  /**
+   * pm: Block for when stop button clicked.
+   * @this Blockly.Block
+   */
+  init: function () {
+    this.jsonInit({
+      "id": "event_whenstopclicked",
+      "message0": "when %1 clicked",
+      "args0": [
+        {
+          "type": "field_image",
+          "src": Blockly.mainWorkspace.options.pathToMedia + "/icons/control_stop.svg",
+          "width": 24,
+          "height": 24,
+          "alt": "stop"
         }
       ],
       "category": Blockly.Categories.event,
@@ -99,7 +123,7 @@ Blockly.Blocks['event_whenthisspriteclicked'] = {
    * Block for when this sprite clicked.
    * @this Blockly.Block
    */
-  init: function() {
+  init: function () {
     this.jsonInit({
       "message0": Blockly.Msg.EVENT_WHENTHISSPRITECLICKED,
       "category": Blockly.Categories.event,
@@ -114,7 +138,7 @@ Blockly.Blocks['event_whenstageclicked'] = {
    * Block for when the stage is clicked.
    * @this Blockly.Block
    */
-  init: function() {
+  init: function () {
     this.jsonInit({
       "message0": Blockly.Msg.EVENT_WHENSTAGECLICKED,
       "category": Blockly.Categories.event,
@@ -128,7 +152,7 @@ Blockly.Blocks['event_whenbroadcastreceived'] = {
    * Block for when broadcast received.
    * @this Blockly.Block
    */
-  init: function() {
+  init: function () {
     this.jsonInit({
       "id": "event_whenbroadcastreceived",
       "message0": Blockly.Msg.EVENT_WHENBROADCASTRECEIVED,
@@ -151,7 +175,7 @@ Blockly.Blocks['event_whenbackdropswitchesto'] = {
    * Block for when the current backdrop switched to a selected backdrop.
    * @this Blockly.Block
    */
-  init: function() {
+  init: function () {
     this.jsonInit({
       "message0": Blockly.Msg.EVENT_WHENBACKDROPSWITCHESTO,
       "args0": [
@@ -174,7 +198,7 @@ Blockly.Blocks['event_whengreaterthan'] = {
    * Block for when loudness/timer/video motion is greater than the value.
    * @this Blockly.Block
    */
-  init: function() {
+  init: function () {
     this.jsonInit({
       "message0": Blockly.Msg.EVENT_WHENGREATERTHAN,
       "args0": [
@@ -202,21 +226,20 @@ Blockly.Blocks['event_broadcast_menu'] = {
    * Broadcast drop-down menu.
    * @this Blockly.Block
    */
-  init: function() {
+  init: function () {
     this.jsonInit({
       "message0": "%1",
       "args0": [
         {
           "type": "field_variable",
           "name": "BROADCAST_OPTION",
-          "variableTypes":[Blockly.BROADCAST_MESSAGE_VARIABLE_TYPE],
+          "variableTypes": [Blockly.BROADCAST_MESSAGE_VARIABLE_TYPE],
           "variable": Blockly.Msg.DEFAULT_BROADCAST_MESSAGE_NAME
         }
       ],
       "colour": Blockly.Colours.event.secondary,
       "colourSecondary": Blockly.Colours.event.secondary,
       "colourTertiary": Blockly.Colours.event.tertiary,
-      "colourQuaternary": Blockly.Colours.event.quaternary,
       "extensions": ["output_string"]
     });
   }
@@ -227,7 +250,7 @@ Blockly.Blocks['event_broadcast'] = {
    * Block to send a broadcast.
    * @this Blockly.Block
    */
-  init: function() {
+  init: function () {
     this.jsonInit({
       "id": "event_broadcast",
       "message0": Blockly.Msg.EVENT_BROADCAST,
@@ -248,13 +271,13 @@ Blockly.Blocks['event_broadcastandwait'] = {
    * Block to send a broadcast.
    * @this Blockly.Block
    */
-  init: function() {
+  init: function () {
     this.jsonInit({
       "message0": Blockly.Msg.EVENT_BROADCASTANDWAIT,
       "args0": [
         {
-          "type":"input_value",
-          "name":"BROADCAST_INPUT"
+          "type": "input_value",
+          "name": "BROADCAST_INPUT"
         }
       ],
       "category": Blockly.Categories.event,
@@ -268,7 +291,7 @@ Blockly.Blocks['event_whenkeypressed'] = {
    * Block to send a broadcast.
    * @this Blockly.Block
    */
-  init: function() {
+  init: function () {
     this.jsonInit({
       "id": "event_whenkeypressed",
       "message0": Blockly.Msg.EVENT_WHENKEYPRESSED,
@@ -320,6 +343,126 @@ Blockly.Blocks['event_whenkeypressed'] = {
             ['8', '8'],
             ['9', '9']
           ]
+        }
+      ],
+      "category": Blockly.Categories.event,
+      "extensions": ["colours_event", "shape_hat"]
+    });
+  }
+};
+
+Blockly.Blocks['event_whenkeyhit'] = {
+  /**
+   * Block to send a broadcast.
+   * @this Blockly.Block
+   */
+  init: function () {
+    this.jsonInit({
+      "id": "event_whenkeyhit",
+      "message0": "when %1 key hit",
+      "args0": [
+        {
+          "type": "field_dropdown",
+          "name": "KEY_OPTION",
+          "options": [
+            [Blockly.Msg.EVENT_WHENKEYPRESSED_SPACE, 'space'],
+            [Blockly.Msg.EVENT_WHENKEYPRESSED_UP, 'up arrow'],
+            [Blockly.Msg.EVENT_WHENKEYPRESSED_DOWN, 'down arrow'],
+            [Blockly.Msg.EVENT_WHENKEYPRESSED_RIGHT, 'right arrow'],
+            [Blockly.Msg.EVENT_WHENKEYPRESSED_LEFT, 'left arrow'],
+            [Blockly.Msg.EVENT_WHENKEYPRESSED_ANY, 'any'],
+            ['a', 'a'],
+            ['b', 'b'],
+            ['c', 'c'],
+            ['d', 'd'],
+            ['e', 'e'],
+            ['f', 'f'],
+            ['g', 'g'],
+            ['h', 'h'],
+            ['i', 'i'],
+            ['j', 'j'],
+            ['k', 'k'],
+            ['l', 'l'],
+            ['m', 'm'],
+            ['n', 'n'],
+            ['o', 'o'],
+            ['p', 'p'],
+            ['q', 'q'],
+            ['r', 'r'],
+            ['s', 's'],
+            ['t', 't'],
+            ['u', 'u'],
+            ['v', 'v'],
+            ['w', 'w'],
+            ['x', 'x'],
+            ['y', 'y'],
+            ['z', 'z'],
+            ['0', '0'],
+            ['1', '1'],
+            ['2', '2'],
+            ['3', '3'],
+            ['4', '4'],
+            ['5', '5'],
+            ['6', '6'],
+            ['7', '7'],
+            ['8', '8'],
+            ['9', '9']
+          ]
+        }
+      ],
+      "category": Blockly.Categories.event,
+      "extensions": ["colours_event", "shape_hat"]
+    });
+  }
+};
+
+Blockly.Blocks['event_whenmousescrolled'] = {
+  /**
+   * pm: Block to send a broadcast when the mouse is scrolled in a direction.
+   * @this Blockly.Block
+   */
+  init: function () {
+    this.jsonInit({
+      "id": "event_whenmousescrolled",
+      "message0": "when mouse is scrolled %1",
+      "args0": [
+        {
+          "type": "field_dropdown",
+          "name": "KEY_OPTION",
+          "options": [
+            ['up', 'up'],
+            ['down', 'down']
+          ]
+        }
+      ],
+      "category": Blockly.Categories.event,
+      "extensions": ["colours_event", "shape_hat"]
+    });
+  }
+};
+
+Blockly.Blocks["event_always"] = {
+  init: function() {
+    this.jsonInit({
+      "inputsInline": true,
+      "message0": "always",
+      "args0": [],
+      "category": Blockly.Categories.event,
+      "extensions": ["colours_event", "shape_hat"]
+    });
+  }
+};
+
+Blockly.Blocks["event_whenanything"] = {
+  init: function() {
+    this.jsonInit({
+      "inputsInline": true,
+      "message0": "when %1",
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "ANYTHING",
+          "check": "Boolean"
         }
       ],
       "category": Blockly.Categories.event,

@@ -35,26 +35,25 @@ goog.require('Blockly.constants');
 
 /**
  * Helper function that generates an extension based on a category name.
- * The generated function will set primary, secondary, tertiary, and quaternary
- * colours based on the category name.
+ * The generated function will set primary, secondary, and tertiary colours
+ * based on the category name.
  * @param {String} category The name of the category to set colours for.
  * @return {function} An extension function that sets colours based on the given
  *     category.
  */
 Blockly.ScratchBlocks.VerticalExtensions.colourHelper = function(category) {
   var colours = Blockly.Colours[category];
-  if (!(colours && colours.primary && colours.secondary && colours.tertiary &&
-    colours.quaternary)) {
+  if (!(colours && colours.primary && colours.secondary && colours.tertiary)) {
     throw new Error('Could not find colours for category "' + category + '"');
   }
   /**
-   * Set the primary, secondary, tertiary, and quaternary colours on this block for
-   * the given category.
+   * Set the primary, secondary, and tertiary colours on this block for the
+   * given category.
    * @this {Blockly.Block}
    */
   return function() {
     this.setColourFromRawValues_(colours.primary, colours.secondary,
-        colours.tertiary, colours.quaternary);
+        colours.tertiary);
   };
 };
 
@@ -63,8 +62,33 @@ Blockly.ScratchBlocks.VerticalExtensions.colourHelper = function(category) {
  */
 Blockly.ScratchBlocks.VerticalExtensions.COLOUR_TEXTFIELD = function() {
   this.setColourFromRawValues_(Blockly.Colours.textField,
-      Blockly.Colours.textField, Blockly.Colours.textField,
-      Blockly.Colours.textField);
+      Blockly.Colours.textField, Blockly.Colours.textField);
+};
+
+/**
+ * Extension to make a block fit into a stack of statements, regardless of its
+ * inputs.  That means the block should have a previous connection and a next
+ * connection and have inline inputs.
+ * @this {Blockly.Block}
+ * @readonly
+ */
+Blockly.ScratchBlocks.VerticalExtensions.SHAPE_PROCEDURE = function() {
+  this.setInputsInline(true);
+  this.setPreviousStatement(true, 'procedure');
+  this.setNextStatement(true, 'procedure');
+};
+
+/**
+ * Extension to make a block fit into a stack of statements, regardless of its
+ * inputs.  That means the block should have a previous connection and a next
+ * connection and have inline inputs.
+ * @this {Blockly.Block}
+ * @readonly
+ */
+Blockly.ScratchBlocks.VerticalExtensions.SHAPE_CASE = function() {
+  this.setInputsInline(true);
+  this.setPreviousStatement(true, 'switchCase');
+  this.setNextStatement(true, 'switchCase');
 };
 
 /**
@@ -76,8 +100,8 @@ Blockly.ScratchBlocks.VerticalExtensions.COLOUR_TEXTFIELD = function() {
  */
 Blockly.ScratchBlocks.VerticalExtensions.SHAPE_STATEMENT = function() {
   this.setInputsInline(true);
-  this.setPreviousStatement(true, null);
-  this.setNextStatement(true, null);
+  this.setPreviousStatement(true, 'normal');
+  this.setNextStatement(true, 'normal');
 };
 
 /**
@@ -89,7 +113,7 @@ Blockly.ScratchBlocks.VerticalExtensions.SHAPE_STATEMENT = function() {
  */
 Blockly.ScratchBlocks.VerticalExtensions.SHAPE_HAT = function() {
   this.setInputsInline(true);
-  this.setNextStatement(true, null);
+  this.setNextStatement(true, 'normal');
 };
 
 /**
@@ -101,7 +125,7 @@ Blockly.ScratchBlocks.VerticalExtensions.SHAPE_HAT = function() {
  */
 Blockly.ScratchBlocks.VerticalExtensions.SHAPE_END = function() {
   this.setInputsInline(true);
-  this.setPreviousStatement(true, null);
+  this.setPreviousStatement(true, 'normal');
 };
 
 /**
@@ -141,6 +165,12 @@ Blockly.ScratchBlocks.VerticalExtensions.OUTPUT_BOOLEAN = function() {
   this.setInputsInline(true);
   this.setOutputShape(Blockly.OUTPUT_SHAPE_HEXAGONAL);
   this.setOutput(true, 'Boolean');
+};
+
+Blockly.ScratchBlocks.VerticalExtensions.OUTPUT_ANY = function() {
+  this.setInputsInline(true);
+  this.setOutputShape(Blockly.OUTPUT_SHAPE_ROUND);
+  this.setOutput(true);
 };
 
 /**
@@ -210,23 +240,9 @@ Blockly.ScratchBlocks.VerticalExtensions.PROCEDURE_CALL_CONTEXTMENU = {
    */
   customContextMenu: function(menuOptions) {
     menuOptions.push(Blockly.Procedures.makeEditOption(this));
-    if (
-      !this.isInFlyout &&
-      Blockly.Procedures.USER_CAN_CHANGE_CALL_TYPE &&
-      this.workspace.procedureReturnsEnabled
-    ) {
-      menuOptions.push(Blockly.Procedures.makeChangeTypeOption(this));
-    }
   }
 };
 
-Blockly.ScratchBlocks.VerticalExtensions.FROM_EXTENSION = function() {
-  this.isFromExtension = true;
-};
-
-Blockly.ScratchBlocks.VerticalExtensions.DEFAULT_EXTENSION_COLORS = function() {
-  this.usesDefaultExtensionColors = true;
-};
 
 Blockly.ScratchBlocks.VerticalExtensions.SCRATCH_EXTENSION = function() {
   this.isScratchExtension = true;
@@ -252,6 +268,10 @@ Blockly.ScratchBlocks.VerticalExtensions.registerAll = function() {
       Blockly.ScratchBlocks.VerticalExtensions.COLOUR_TEXTFIELD);
 
   // Register extensions for common block shapes.
+  Blockly.Extensions.register('shape_procedure',
+      Blockly.ScratchBlocks.VerticalExtensions.SHAPE_PROCEDURE);
+  Blockly.Extensions.register('shape_case',
+      Blockly.ScratchBlocks.VerticalExtensions.SHAPE_CASE);
   Blockly.Extensions.register('shape_statement',
       Blockly.ScratchBlocks.VerticalExtensions.SHAPE_STATEMENT);
   Blockly.Extensions.register('shape_hat',
@@ -266,6 +286,8 @@ Blockly.ScratchBlocks.VerticalExtensions.registerAll = function() {
       Blockly.ScratchBlocks.VerticalExtensions.OUTPUT_STRING);
   Blockly.Extensions.register('output_boolean',
       Blockly.ScratchBlocks.VerticalExtensions.OUTPUT_BOOLEAN);
+  Blockly.Extensions.register('output_any',
+      Blockly.ScratchBlocks.VerticalExtensions.OUTPUT_ANY);
 
   // Custom procedures have interesting context menus.
   Blockly.Extensions.registerMixin('procedure_def_contextmenu',
@@ -273,15 +295,7 @@ Blockly.ScratchBlocks.VerticalExtensions.registerAll = function() {
   Blockly.Extensions.registerMixin('procedure_call_contextmenu',
       Blockly.ScratchBlocks.VerticalExtensions.PROCEDURE_CALL_CONTEXTMENU);
 
-  // Given to all blocks from an extension.
-  Blockly.Extensions.register('from_extension',
-      Blockly.ScratchBlocks.VerticalExtensions.FROM_EXTENSION);
-
-  // Given to blocks that use the default extension colors ("pen")
-  Blockly.Extensions.register('default_extension_colors',
-      Blockly.ScratchBlocks.VerticalExtensions.DEFAULT_EXTENSION_COLORS);
-
-  // Misleading name. Given to blocks that have an extension icon.
+  // Extension blocks have slightly different block rendering.
   Blockly.Extensions.register('scratch_extension',
       Blockly.ScratchBlocks.VerticalExtensions.SCRATCH_EXTENSION);
 };
