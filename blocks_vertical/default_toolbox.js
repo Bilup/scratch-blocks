@@ -28,15 +28,13 @@ goog.require('Blockly.Blocks');
  * @fileoverview Provide a default toolbox XML.
  */
 
+/**
+ * NOTE: This is only used in the scratch-blocks development playground!
+ * The XML here is overridden by scratch-gui.
+ */
+
 Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: none">' +
   '<category name="%{BKY_CATEGORY_MOTION}" id="motion" colour="#4C97FF" secondaryColour="#3373CC">' +
-    '<block type="motion_movesteps" id="motion_movesteps">' +
-      '<value name="STEPS">' +
-        '<shadow type="math_number">' +
-          '<field name="NUM">10</field>' +
-        '</shadow>' +
-      '</value>' +
-    '</block>' +
     '<block type="motion_movesteps" id="motion_movesteps">' +
       '<value name="STEPS">' +
         '<shadow type="math_number">' +
@@ -201,7 +199,6 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
       '</value>' +
     '</block>' +
     '<block type="looks_gotofrontback" id="looks_gotofrontback"></block>' +
-    '<block type="looks_goTargetLayer" id="looks_goTargetLayer"></block>' +
     '<block type="looks_goforwardbackwardlayers" id="looks_goforwardbackwardlayers">' +
       '<value name="NUM">' +
         '<shadow type="math_integer">' +
@@ -212,6 +209,7 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '<block type="looks_costumenumbername" id="looks_costumenumbername"></block>' +
     '<block type="looks_backdropnumbername" id="looks_backdropnumbername"></block>' +
     '<block type="looks_size" id="looks_size"></block>' +
+    '<block type="looks_costumes" id="looks_costumes"></block>' +
   '</category>' +
   '<category name="%{BKY_CATEGORY_SOUND}" id="sound" colour="#D65CD6" secondaryColour="#BD42BD">' +
     '<block type="sound_play" id="sound_play">' +
@@ -260,8 +258,6 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '<block type="event_whenflagclicked" id="event_whenflagclicked"></block>' +
     '<block type="event_whenkeypressed" id="event_whenkeypressed">' +
     '</block>' +
-    '<block type="event_whenanything" id="event_whenanything">' +
-    '</block>' +
     '<block type="event_whenthisspriteclicked" id="event_whenthisspriteclicked"></block>' +
     '<block type="event_whenbackdropswitchesto" id="event_whenbackdropswitchesto">' +
     '</block>' +
@@ -301,10 +297,33 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
       '</value>' +
     '</block>' +
     '<block type="control_forever" id="control_forever"></block>' +
-    '<block type="control_if" id="control_if"><value name="CONDITION"><shadow type="checkbox" /></value></block>' +
+    '<block type="control_if" id="control_if"></block>' +
     '<block type="control_if_else" id="control_if_else"></block>' +
     '<block type="control_wait_until" id="control_wait_until"></block>' +
     '<block type="control_repeat_until" id="control_repeat_until"></block>' +
+    '<block type="control_switch" id="control_switch">' +
+      '<value name="VALUE">' +
+        '<shadow type="text">' +
+          '<field name="TEXT"></field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="control_case" id="control_case">' +
+      '<value name="VALUE">' +
+        '<shadow type="text">' +
+          '<field name="TEXT"></field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="control_case_fallthrough" id="control_case_fallthrough">' +
+      '<value name="VALUE">' +
+        '<shadow type="text">' +
+          '<field name="TEXT"></field>' +
+        '</shadow>' +
+      '</value>' +
+    '</block>' +
+    '<block type="control_default" id="control_default"></block>' +
+    '<block type="control_break" id="control_break"></block>' +
     '<block type="control_stop" id="control_stop"></block>' +
     '<block type="control_start_as_clone" id="control_start_as_clone"></block>' +
     '<block type="control_create_clone_of" id="control_create_clone_of">' +
@@ -313,7 +332,6 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
       '</value>' +
     '</block>' +
     '<block type="control_delete_this_clone" id="control_delete_this_clone"></block>' +
-    '<block type="control_for_each" id="control_for_each"></block>' +
   '</category>' +
   '<category name="%{BKY_CATEGORY_SENSING}" id="sensing" colour="#4CBFE6" secondaryColour="#2E8EB8">' +
     '<block type="sensing_touchingobject" id="sensing_touchingobject">' +
@@ -521,6 +539,8 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
         '</shadow>' +
       '</value>' +
     '</block>' +
+    '<block type="operator_pi" id="operator_pi"></block>' +
+    '<block type="operator_newline" id="operator_newline"></block>' +
     '<block type="operator_mathop" id="operator_mathop">' +
       '<value name="NUM">' +
         '<shadow type="math_number">' +
@@ -528,17 +548,13 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
         '</shadow>' +
       '</value>' +
     '</block>' +
-    '<block type="operator_checkboxBoolean" id="operator_checkboxBoolean"></block>' +
   '</category>' +
-  '<category name="%{BKY_CATEGORY_VARIABLES}" id="variable" colour="#FF8C1A" secondaryColour="#DB6E00" custom="VARIABLE">' +
-  '</category>' +
-  '<category name="%{BKY_CATEGORY_LISTS}" id="list" colour="#FF661A" secondaryColour="#FF5500" custom="LIST">' +
+  '<category name="%{BKY_CATEGORY_VARIABLES}" id="data" colour="#FF8C1A" secondaryColour="#DB6E00" custom="VARIABLE">' +
   '</category>' +
   '<category name="%{BKY_CATEGORY_MYBLOCKS}" id="more" colour="#FF6680" secondaryColour="#FF4D6A" custom="PROCEDURE">' +
   '</category>' +
   '<category name="Extensions" id="extensions" colour="#FF6680" secondaryColour="#FF4D6A" ' +
-    'iconURI="../media/extensions/wedo2-block-icon.svg" showStatusButton="true" ' +
-    'options="extensionControls">' +
+    'iconURI="../media/extensions/wedo2-block-icon.svg" showStatusButton="true">' +
     '<block type="extension_pen_down" id="extension_pen_down"></block>' +
     '<block type="extension_music_drum" id="extension_music_drum">' +
       '<value name="NUMBER">' +
@@ -546,16 +562,10 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
           '<field name="NUM">1</field>' +
         '</shadow>' +
       '</value>' +
-    '</block>' +
+      '</block>' +
     '<block type="extension_wedo_motor" id="extension_wedo_motor"></block>' +
     '<block type="extension_wedo_hat" id="extension_wedo_hat"></block>' +
     '<block type="extension_wedo_boolean" id="extension_wedo_boolean"></block>' +
-    '<block type="control_fieldbutton" id="control_fieldbutton">' +
-          '<field name="BUTTON" id="TEST_BUTTON"></field>' +
-    '</block>' +
-    '<block type="control_fieldcheckboxoriginal" id="control_fieldcheckboxoriginal"></block>' +
-    '<block type="motion_mutatorCheckboxTest" id="motion_mutatorCheckboxTest"></block>' +
-    '<block type="operator_expandablejoininputs" id="extension_wedo_boolean"></block>' +
     '<block type="extension_wedo_tilt_reporter" id="extension_wedo_reporter">' +
       '<value name="TILT">' +
         '<shadow type="extension_wedo_tilt_menu"></shadow>' +
@@ -565,7 +575,6 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
     '<block type="extension_microbit_display" id="extension_microbit_display">' +
       '<value name="MATRIX">' +
         '<shadow type="matrix">' +
-          '<mutation width="10" height="10"></mutation>' +
           '<field name="MATRIX">0101010101100010101000100</field>' +
         '</shadow>' +
       '</value>' +
@@ -582,6 +591,5 @@ Blockly.Blocks.defaultToolbox = '<xml id="toolbox-categories" style="display: no
         '</shadow>' +
       '</value>' +
     '</block>' +
-    '<block type="field_textdropdown_test" id="extension_wedo_boolean"></block>' +
   '</category>' +
   '</xml>';
