@@ -307,7 +307,10 @@ Blockly.ScratchMsgs.locales["en"] =
     "NEW_BROADCAST_MESSAGE": "New message",
     "NEW_BROADCAST_MESSAGE_TITLE": "New message name:",
     "BROADCAST_MODAL_TITLE": "New Message",
-    "DEFAULT_BROADCAST_MESSAGE_NAME": "message1"
+    "DEFAULT_BROADCAST_MESSAGE_NAME": "message1",
+    "UNSUPPORT_TW_1": "Blocks below do not support TurboWarp",
+    "UNSUPPORT_TW_2": "And we highly discourage using them",
+    "UNSUPPORT_TW_3": "They're keeping here only for compatibility with MistWarp"
 };
 
 Blockly.ScratchMsgs.locales["zh-cn"] =
@@ -610,5 +613,8 @@ Blockly.ScratchMsgs.locales["zh-cn"] =
     "NEW_BROADCAST_MESSAGE": "新消息",
     "NEW_BROADCAST_MESSAGE_TITLE": "新消息的名称：",
     "BROADCAST_MODAL_TITLE": "新消息",
-    "DEFAULT_BROADCAST_MESSAGE_NAME": "消息1"
+    "DEFAULT_BROADCAST_MESSAGE_NAME": "消息1",
+    "UNSUPPORT_TW_1": "以下积木不支持 TurboWarp",
+    "UNSUPPORT_TW_2": "我们强烈建议不去使用它们",
+    "UNSUPPORT_TW_3": "它们仅用于与 MistWarp 兼容。"
 };
